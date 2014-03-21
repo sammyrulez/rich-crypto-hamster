@@ -9,5 +9,6 @@ coverage==3.7.1
 django-coverage==1.2.4
 kombu==3.0.14
 pymongo==2.6.3
+-e git+http://github.com/poswald/python-money.git@b7d295cc8a2ba85d843f2c3c04959600bc591a05#egg=python_money-dev
 pytz==2014.1
 wsgiref==0.1.2

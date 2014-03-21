@@ -37,7 +37,8 @@ INSTALLED_APPS = (
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'south',
-    'django_coverage'
+    'django_coverage',
+    'exchange'
 
 )
 
