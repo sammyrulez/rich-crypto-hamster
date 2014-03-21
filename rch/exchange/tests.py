@@ -8,3 +8,5 @@ class OperationFormTest(TestCase):
         opForm = OperationForm()
         opForm.amount = 10
         self.assertTrue(opForm.is_valid())
+        opForm.amount = -9
+        self.assertFalse(opForm.is_valid())
