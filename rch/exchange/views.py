@@ -16,7 +16,7 @@ class DepositView(FormView):
 
     def form_valid(self, form):
         #send(sender=self, toppings=toppings, size=size)
-        command_executed.send(self,command_name="deposit",payload=form.cleaned_data)
+        command_executed.send(self,command="deposit",payload=form.cleaned_data)
         return super(DepositView, self).form_valid(form)
 
 
