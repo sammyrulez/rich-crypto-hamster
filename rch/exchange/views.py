@@ -2,6 +2,7 @@ from django.core.urlresolvers import reverse_lazy
 from django.shortcuts import render
 from django.views.generic.edit import FormView
 from exchange.forms import OperationForm
+from event_sourcing import command_executed
 
 
 def home(request):
@@ -14,7 +15,8 @@ class DepositView(FormView):
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
-        #TODO send command
+        #send(sender=self, toppings=toppings, size=size)
+        command_executed.send(self,command_name="deposit",payload=form.cleaned_data)
         return super(DepositView, self).form_valid(form)
 
 

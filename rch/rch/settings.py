@@ -38,7 +38,8 @@ INSTALLED_APPS = (
     'django.contrib.staticfiles',
     'south',
     'django_coverage',
-    'exchange'
+    'exchange',
+    'event_sourcing',
 
 )
 
