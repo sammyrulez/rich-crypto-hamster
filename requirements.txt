@@ -6,6 +6,7 @@ argparse==1.2.1
 billiard==3.3.0.16
 celery==3.1.9
 coverage==3.7.1
+django-celery==3.1.9
 django-coverage==1.2.4
 kombu==3.0.14
 pymongo==2.6.3

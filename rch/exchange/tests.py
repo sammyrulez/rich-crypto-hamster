@@ -3,6 +3,7 @@ from django.test import TestCase, Client
 from exchange.forms import OperationForm
 
 
+
 class OperationFormTest(TestCase):
 
     def test_is_valid(self):

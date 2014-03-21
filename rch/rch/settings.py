@@ -27,6 +27,13 @@ TEMPLATE_DEBUG = True
 ALLOWED_HOSTS = []
 
 
+BROKER_URL = 'amqp://guest:guest@localhost//'
+
+CELERY_ACCEPT_CONTENT = ['json']
+CELERY_TASK_SERIALIZER = 'json'
+CELERY_RESULT_SERIALIZER = 'json'
+
+
 # Application definition
 
 INSTALLED_APPS = (
