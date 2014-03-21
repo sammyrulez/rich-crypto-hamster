@@ -33,7 +33,12 @@ class DepositViewTest(TestCase):
         url = reverse('deposit');
         response = c.post(url)
         self.assertEquals(200,response.status_code)
+
         self.assertTrue("submit" in response.content)
         self.assertTrue("amount" in response.content)
+        self.assertTrue("This field is required." in response.content)
+
+        response = c.post(url,data={'amount':-9})
+        self.assertEquals(200,response.status_code)
         self.assertTrue("Invalid amount" in response.content)
 
