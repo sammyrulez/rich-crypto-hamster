@@ -26,11 +26,14 @@ class DepositViewTest(TestCase):
         c = Client()
         url = reverse('deposit');
         response = c.post(url,data={'amount':10})
-        # self.assertEquals(200,response.status_code)
+        self.assertEquals(302,response.status_code)
 
     def test_form_validation(self):
         c = Client()
         url = reverse('deposit');
         response = c.post(url)
-        # self.assertEquals(200,response.status_code)
+        self.assertEquals(200,response.status_code)
+        self.assertTrue("submit" in response.content)
+        self.assertTrue("amount" in response.content)
+        self.assertTrue("Invalid amount" in response.content)
 
