@@ -1,0 +1,14 @@
+language: python
+python:
+  - "2.7"
+env:
+  - DJANGO=1.6
+install:
+  - pip install pep8 --use-mirrors
+  - pip install https://github.com/dcramer/pyflakes/tarball/master
+  - pip install -r requirements.txt --use-mirrors
+before_script:
+  - "pep8 --exclude=migrations --ignore=E501,E225,E261,W191,E101 ."
+  - pyflakes -x W .
+script:
+  - python manage.py test_coverage exchange event_sourcing
