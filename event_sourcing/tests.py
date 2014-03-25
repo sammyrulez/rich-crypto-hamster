@@ -11,6 +11,7 @@ from django.conf import settings
 def flag_command(sender, **kwargs):
     sender.commandCalled = True
 
+
 class SendCommandTest(TestCase):
 
     def setUp(self):
