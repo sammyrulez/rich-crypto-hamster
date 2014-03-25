@@ -34,6 +34,10 @@ CELERY_TASK_SERIALIZER = 'json'
 CELERY_RESULT_SERIALIZER = 'json'
 
 
+EVENT_SOURCING_MONGODB_URL = 'mongodb://localhost:27017/'
+EVENT_SOURCING_MONGODB_DBNAME = 'rchevents'
+EVENT_SOURCING_STORAGE = 'event_sourcing.mongodb_event_storage.event_storage'
+
 # Application definition
 
 INSTALLED_APPS = (
