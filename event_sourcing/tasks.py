@@ -1,15 +1,23 @@
 from celery import shared_task
 from django.conf import settings
 from event_sourcing import event_stored_fail, event_stored
+import importlib
 
-storage_split = settings.EVENT_SOURCING_STORAGE.split('.')
-module = __import__(storage_split[0])
-print storage_split[0]
-for sub in storage_split[1:len(storage_split) - 1]:
-    print dir(module), sub
-    module = getattr(module, sub)
 
-instance = getattr(module, storage_split[len(storage_split) - 1])
+def load_class(full_class_string):
+    """
+    dynamically load a class from a string
+    """
+
+    class_data = full_class_string.split(".")
+    module_path = ".".join(class_data[:-1])
+    class_str = class_data[-1]
+
+    module = importlib.import_module(module_path)
+    # Finally, we retrieve the Class
+    return getattr(module, class_str)
+
+instance = load_class(settings.EVENT_SOURCING_STORAGE)
 
 
 @shared_task
