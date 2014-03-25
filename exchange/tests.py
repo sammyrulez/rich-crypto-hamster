@@ -3,7 +3,6 @@ from django.test import TestCase, Client
 from exchange.forms import OperationForm
 
 
-
 class OperationFormTest(TestCase):
 
     def test_is_valid(self):
@@ -26,7 +25,7 @@ class DepositViewTest(TestCase):
     def test_form_submit(self):
         c = Client()
         url = reverse('deposit')
-        response = c.post(url, data={'amount':10})
+        response = c.post(url, data={'amount': 10})
         self.assertEquals(302, response.status_code)
 
     def test_form_validation(self):
@@ -39,6 +38,6 @@ class DepositViewTest(TestCase):
         self.assertTrue("amount" in response.content)
         self.assertTrue("This field is required." in response.content)
 
-        response = c.post(url,data={'amount':-9})
-        self.assertEquals(200,response.status_code)
+        response = c.post(url, data={'amount': -9})
+        self.assertEquals(200, response.status_code)
         self.assertTrue("Invalid amount" in response.content)

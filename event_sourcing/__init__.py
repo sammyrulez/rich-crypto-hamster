@@ -7,6 +7,7 @@ event_stored = django.dispatch.Signal(providing_args=["command", "payload"])
 
 event_stored_fail = django.dispatch.Signal(providing_args=["command", "payload"])
 
+
 @receiver(command_executed)
 def event_sourcing_callback(sender, **kwargs):
     from event_sourcing import tasks
@@ -19,5 +20,5 @@ def event_sourcing_callback(sender, **kwargs):
 
 class EventStorage(object):
 
-    def store_event(self,event_data):
+    def store_event(self, event_data):
         raise NotImplemented()

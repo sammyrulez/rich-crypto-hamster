@@ -35,10 +35,5 @@ class TaskTest(TestCase):
 
     def test_store_event(self):
         store_event("test", {'test': 'value'})
-        self.assertTrue(self.collection.find( {'test': 'value'}))
-        self.assertEquals(1,self.collection.find( {'test': 'value'}).count())
-
-
-
-
-
+        self.assertTrue(self.collection.find({'test': 'value'}))
+        self.assertEquals(1, self.collection.find({'test': 'value'}).count())
