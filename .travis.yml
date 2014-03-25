@@ -13,7 +13,7 @@ before_script:
   - "pep8 --exclude=migrations --ignore=E501,E225,E261,W191,E101,E124 ."
   - pyflakes -x W .
 script:
-  - python manage.py test_coverage exchange event_sourcing
+  - coverage run manage.py test_coverage exchange event_sourcing
 after_success:
   - coveralls
 
