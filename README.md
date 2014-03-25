@@ -1,4 +1,4 @@
-rich-crypto-hamster
+Rich Crypto Hamster
 ===================
 
-A bitcoin exchange build with EventSourcing and CQRS
+A bitcoin exchange example built with EventSourcing and CQRS
