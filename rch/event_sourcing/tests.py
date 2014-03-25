@@ -7,7 +7,6 @@ from event_sourcing.tasks import store_event
 from django.conf import settings
 
 
-
 @receiver(command_executed)
 def flag_command(sender, **kwargs):
     sender.commandCalled = True
@@ -29,10 +28,17 @@ class TaskTest(TestCase):
         self.db = self.client[settings.EVENT_SOURCING_MONGODB_DBNAME]
         self.collection = self.db[SOURCED_EVENTS]
 
+    def tearDown(self):
+        self.collection.remove({'test': 'value'})
+        for e in self.collection.find():
+            print 'still', e
+
     def test_store_event(self):
         store_event("test", {'test': 'value'})
-        for e in self.collection.find():
-            print e
+        self.assertTrue(self.collection.find( {'test': 'value'}))
+        self.assertEquals(1,self.collection.find( {'test': 'value'}).count())
+
+
 
 
 
