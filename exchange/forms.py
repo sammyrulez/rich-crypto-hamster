@@ -14,5 +14,3 @@ class OperationForm(forms.Form):
         # Always return the cleaned data, whether you have changed it or
         # not.
         return data
-
-

@@ -6,7 +6,8 @@ from event_sourcing import command_executed
 
 
 def home(request):
-    return render(request,'index.html')
+    return render(request, 'index.html')
+
 
 class DepositView(FormView):
 
@@ -15,9 +16,5 @@ class DepositView(FormView):
     success_url = reverse_lazy('home')
 
     def form_valid(self, form):
-        #send(sender=self, toppings=toppings, size=size)
-        command_executed.send(self,command="deposit",payload=form.cleaned_data)
+        command_executed.send(self, command="deposit", payload=form.cleaned_data)
         return super(DepositView, self).form_valid(form)
-
-
-
