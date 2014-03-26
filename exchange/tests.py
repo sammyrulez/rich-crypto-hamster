@@ -41,3 +41,13 @@ class DepositViewTest(TestCase):
         response = c.post(url, data={'amount': -9})
         self.assertEquals(200, response.status_code)
         self.assertTrue("Invalid amount" in response.content)
+
+class WithdrawViewTest(TestCase):
+
+    def test_form_display(self):
+        c = Client()
+        url = reverse('withdraw')
+        response = c.get(url)
+        self.assertEquals(200, response.status_code)
+        self.assertTrue("submit" in response.content)
+        self.assertTrue("amount" in response.content)

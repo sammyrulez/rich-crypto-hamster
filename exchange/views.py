@@ -18,3 +18,13 @@ class DepositView(FormView):
     def form_valid(self, form):
         command_executed.send(self, command="deposit", payload=form.cleaned_data)
         return super(DepositView, self).form_valid(form)
+
+class WithdrawView(FormView):
+
+    template_name = 'operation.html'
+    form_class = OperationForm
+    success_url = reverse_lazy('home')
+
+    def form_valid(self, form):
+        command_executed.send(self, command="withdraw", payload=form.cleaned_data)
+        return super(WithdrawView, self).form_valid(form)

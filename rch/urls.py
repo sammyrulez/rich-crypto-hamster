@@ -12,5 +12,6 @@ urlpatterns = patterns('',
 
                        url(r'^admin/', include(admin.site.urls)),
                        url(r'^exchange/deposit$', exchange_views.DepositView.as_view(), name='deposit'),
+                       url(r'^exchange/withdraw$', exchange_views.WithdrawView.as_view(), name='withdraw'),
 
 )
