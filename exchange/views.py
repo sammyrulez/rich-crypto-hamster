@@ -8,6 +8,7 @@ from event_sourcing import command_executed
 def home(request):
     return render(request, 'index.html')
 
+
 class OperationView(FormView):
     template_name = 'operation.html'
     form_class = OperationForm
@@ -21,7 +22,6 @@ class OperationView(FormView):
 
 class DepositView(OperationView):
     command_name = 'deposit'
-
 
 
 class WithdrawView(OperationView):

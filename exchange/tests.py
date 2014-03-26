@@ -21,10 +21,9 @@ class DepositViewTest(TestCase):
     fixtures = ['auth']
 
     def setUp(self):
-        super(DepositViewTest,self).setUp()
+        super(DepositViewTest, self).setUp()
         self.client = Client()
-        self.client .login(username=TESTDUMMYUSER, password=PASSWORD)
-
+        self.client.login(username=TESTDUMMYUSER, password=PASSWORD)
 
     def test_auth_only(self):
         un_auth_client = Client()
@@ -33,21 +32,18 @@ class DepositViewTest(TestCase):
         self.assertEquals(302, response.status_code)
 
     def test_form_display(self):
-
         url = reverse('deposit')
-        response = self.client .get(url)
+        response = self.client.get(url)
         self.assertEquals(200, response.status_code)
         self.assertTrue("submit" in response.content)
         self.assertTrue("amount" in response.content)
 
     def test_form_submit(self):
-
         url = reverse('deposit')
         response = self.client.post(url, data={'amount': 10})
         self.assertEquals(302, response.status_code)
 
     def test_form_validation(self):
-
         url = reverse('deposit')
         response = self.client .post(url)
         self.assertEquals(200, response.status_code)
@@ -60,14 +56,15 @@ class DepositViewTest(TestCase):
         self.assertEquals(200, response.status_code)
         self.assertTrue("Invalid amount" in response.content)
 
+
 class WithdrawViewTest(TestCase):
 
     fixtures = ['auth']
 
     def setUp(self):
-        super(WithdrawViewTest,self).setUp()
+        super(WithdrawViewTest, self).setUp()
         self.client = Client()
-        self.client .login(username=TESTDUMMYUSER, password=PASSWORD)
+        self.client.login(username=TESTDUMMYUSER, password=PASSWORD)
 
     def test_auth_only(self):
         un_auth_client = Client()
