@@ -21,6 +21,7 @@ class DepositViewTest(TestCase):
     fixtures = ['auth']
 
     def setUp(self):
+        print 'DepositViewTest'
         super(DepositViewTest, self).setUp()
         self.client = Client()
         self.client.login(username=TESTDUMMYUSER, password=PASSWORD)
