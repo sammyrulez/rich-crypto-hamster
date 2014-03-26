@@ -72,7 +72,6 @@ class WithdrawViewTest(TestCase):
         response = un_auth_client.get(url)
         self.assertEquals(302, response.status_code)
 
-
     def test_form_display(self):
         url = reverse('withdraw')
         response = self.client.get(url)
