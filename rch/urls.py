@@ -1,4 +1,5 @@
 from django.conf.urls import patterns, include, url
+from django.contrib.auth.decorators import login_required
 from exchange import views as exchange_views
 
 from django.contrib import admin
@@ -11,7 +12,7 @@ urlpatterns = patterns('',
                        # url(r'^blog/', include('blog.urls')),
 
                        url(r'^admin/', include(admin.site.urls)),
-                       url(r'^exchange/deposit$', exchange_views.DepositView.as_view(), name='deposit'),
-                       url(r'^exchange/withdraw$', exchange_views.WithdrawView.as_view(), name='withdraw'),
+                       url(r'^exchange/deposit$', login_required(exchange_views.DepositView.as_view()), name='deposit'),
+                       url(r'^exchange/withdraw$', login_required(exchange_views.WithdrawView.as_view()), name='withdraw'),
 
 )
