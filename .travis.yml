@@ -5,8 +5,8 @@ services:
   - mongodb # will start mongodb
   - rabbitmq # will start rabbitmq-server
 install:
-  - pip install pep8 --use-mirrors
-  - pip install python-coveralls --use-mirrors
+  - pip install pep8
+  - pip install coveralls
   - pip install https://github.com/dcramer/pyflakes/tarball/master
   - pip install -r requirements.txt --use-mirrors
 before_script:
@@ -15,5 +15,6 @@ before_script:
 script:
   - coverage run --source=exchange,event_sourcing manage.py test exchange event_sourcing
 after_success:
+  - coverage report -m
   - coveralls
 
