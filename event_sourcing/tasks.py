@@ -24,7 +24,7 @@ instance = load_class(settings.EVENT_SOURCING_STORAGE)
 def store_event(event_name, payload):
     print "Async: %s" % event_name
     try:
-        instance.store_event({'event': event_name, 'payload' :payload})
+        instance.store_event({'event': event_name, 'payload': payload})
         event_stored.send("store_event", command=event_name, payload=payload)
     except Exception:
         event_stored_fail.send("store_event", command=event_name, payload=payload)

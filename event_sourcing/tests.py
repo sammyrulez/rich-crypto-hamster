@@ -54,7 +54,6 @@ class TaskTest(TestCase):
         for k in result.find():
             print k
 
-
     def tearDown(self):
         self.collection.remove()
         for e in self.collection.find():

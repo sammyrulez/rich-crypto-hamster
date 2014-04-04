@@ -28,6 +28,7 @@ reduce_code = Code("""
                 }
          """)
 
+
 @receiver(event_stored)
 def event_stored_callback(sender, **kwargs):
     collection = db[SOURCED_EVENTS]

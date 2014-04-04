@@ -81,6 +81,7 @@ class WithdrawViewTest(TestCase):
         self.assertTrue("submit" in response.content)
         self.assertTrue("amount" in response.content)
 
+
 class DenormalizerTest(TestCase):
 
     def test_balance_normalization(self):

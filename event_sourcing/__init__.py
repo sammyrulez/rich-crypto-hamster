@@ -16,7 +16,6 @@ def event_sourcing_callback(sender, **kwargs):
     print("event_sourcing_callback payload: %s" % kwargs['payload'])
 
 
-
 class EventStorage(object):
 
     def store_event(self, event_data):
