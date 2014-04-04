@@ -1,5 +1,5 @@
 from django.conf import settings
-from event_sourcing import EventStorage
+from event_sourcing import EventStorage, event_stored
 from pymongo import MongoClient
 
 SOURCED_EVENTS = 'sourced_events'
@@ -13,6 +13,7 @@ class MongoDbEventStorage(EventStorage):
 
     def store_event(self, event_data):
         self.collection.insert(event_data)
+        event_stored.send(self,event_data=event_data)
 
 
 event_storage = MongoDbEventStorage()

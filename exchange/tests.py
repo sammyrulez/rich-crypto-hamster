@@ -1,6 +1,7 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
 from exchange.forms import OperationForm
+import exchange
 
 PASSWORD = 'kabala'
 
@@ -79,3 +80,8 @@ class WithdrawViewTest(TestCase):
         self.assertEquals(200, response.status_code)
         self.assertTrue("submit" in response.content)
         self.assertTrue("amount" in response.content)
+
+class DenormalizerTest(TestCase):
+
+    def test_balance_normalization(self):
+        exchange.event_stored_callback(self)

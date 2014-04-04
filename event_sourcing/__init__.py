@@ -12,10 +12,9 @@ event_stored_fail = django.dispatch.Signal(providing_args=["command", "payload"]
 def event_sourcing_callback(sender, **kwargs):
     from event_sourcing import tasks
     tasks.store_event.delay(kwargs['command'], kwargs['payload'])
-    print("Command: %s" % kwargs['command'])
-    print("payload: %s" % kwargs['payload'])
-    print("Store to event store")
-    print("denormalize")
+    print("event_sourcing_callback Command: %s" % kwargs['command'])
+    print("event_sourcing_callback payload: %s" % kwargs['payload'])
+
 
 
 class EventStorage(object):
