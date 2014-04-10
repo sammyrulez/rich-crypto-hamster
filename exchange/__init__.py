@@ -31,7 +31,7 @@ reduce_code = Code("""
 
 @receiver(event_stored)
 def event_stored_callback(sender, **kwargs):
-    print "stroing from " ,settings.EVENT_SOURCING_MONGODB_DBNAME ," " ,SOURCED_EVENTS
+    print "stroing from " ,settings.EVENT_SOURCING_MONGODB_DBNAME, " ", SOURCED_EVENTS
     collection = db[SOURCED_EVENTS]
     result = collection.map_reduce(mapper_code, reduce_code, "balance_results")
     for k in result.find():
