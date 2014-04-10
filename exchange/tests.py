@@ -94,4 +94,4 @@ class DenormalizerTest(TestCase):
         self.collection.insert({'event': "deposit", 'payload':  {'user': TESTDUMMYUSER, 'amount': 20}})
 
     def test_balance_normalization(self):
-        exchange.event_stored_callback(self)
+        exchange.update_balance_on_event_stored(self)

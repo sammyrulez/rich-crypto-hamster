@@ -10,7 +10,7 @@ from event_sourcing.mongodb_event_storage import SOURCED_EVENTS
 client = MongoClient(settings.EVENT_SOURCING_MONGODB_URL)
 db = client[settings.EVENT_SOURCING_MONGODB_DBNAME]
 
-mapper_code = Code("""
+balance_mapper_code = Code("""
                function () {
                     signed = this.payload.amount;
                     if(this.event == 'withdraw'){
@@ -19,7 +19,7 @@ mapper_code = Code("""
                     emit(this.payload.user,signed);
                }
          """)
-reduce_code = Code("""
+balance_reduce_code = Code("""
                 function (key, values) {
                   var balance = 0;
                   for (var i = 0; i < values.length; i++) {
@@ -29,12 +29,33 @@ reduce_code = Code("""
                 }
          """)
 
+exchange_ratio_mapper_code = Code("""
+               function () {
+                    signed = 0;
+                    if(this.event == 'deposit'){
+                        signed = this.payload.amount * -1;
+                    }
+                    if(this.event == 'withdraw'){
+                        signed = this.payload.amount;
+                    }
+                    emit(z,signed);
+               }
+         """)
+exchange_reduce_code = Code("""
+                function (key, values) {
+                  var ratio = 1;
+                  for (var i = 0; i < values.length; i++) {
+                    balance += values[i];
+                  }
+                  return balance;
+                }
+         """)#TODO
 
 @receiver(event_stored)
-def event_stored_callback(sender, **kwargs):
+def update_balance_on_event_stored(sender, **kwargs):
     print "storing from ", settings.EVENT_SOURCING_MONGODB_DBNAME, " ", SOURCED_EVENTS
     collection = db[SOURCED_EVENTS]
-    result = collection.map_reduce(mapper_code, reduce_code, "balance_results")
+    result = collection.map_reduce(balance_mapper_code, balance_reduce_code, "balance_results")
     from exchange import models
     for k in result.find():
             print k
