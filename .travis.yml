@@ -9,9 +9,9 @@ install:
   - pip install coveralls
   - pip install https://github.com/dcramer/pyflakes/tarball/master
   - pip install -r requirements.txt --use-mirrors
-before_script:
-  - "pep8 --exclude=migrations --ignore=E501,E225,E261,W191,E101,E124 ."
-  - pyflakes -x W .
+#before_script:
+#  - "pep8 --exclude=migrations --ignore=E501,E225,E261,W191,E101,E124 ."
+#  - pyflakes -x W .
 script:
   - coverage run --source=exchange,event_sourcing manage.py test exchange event_sourcing
 after_success:
