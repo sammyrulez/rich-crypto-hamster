@@ -1,7 +1,10 @@
 from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
+from pymongo import MongoClient
+from event_sourcing.mongodb_event_storage import SOURCED_EVENTS
 from exchange.forms import OperationForm
 import exchange
+from django.conf import settings
 
 PASSWORD = 'kabala'
 
@@ -83,6 +86,10 @@ class WithdrawViewTest(TestCase):
 
 
 class DenormalizerTest(TestCase):
+
+    def setUp(self):
+        self.collection = exchange.db[SOURCED_EVENTS]
+        self.collection.insert({'event': "deposit", 'payload':  {'user': 'sam', 'amount': 20}})
 
     def test_balance_normalization(self):
         exchange.event_stored_callback(self)
