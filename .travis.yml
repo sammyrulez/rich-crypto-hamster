@@ -13,7 +13,7 @@ install:
 #  - "pep8 --exclude=migrations --ignore=E501,E225,E261,W191,E101,E124 ."
 #  - pyflakes -x W .
 script:
-  - coverage run --source=exchange,event_sourcing manage.py test exchange event_sourcing
+  - coverage run --source=exchange,event_sourcing --omit='*migrations*' manage.py test exchange event_sourcing
 after_success:
   - coverage report -m
   - coveralls
