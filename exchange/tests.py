@@ -1,3 +1,4 @@
+from decimal import Decimal
 from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
@@ -88,7 +89,7 @@ class WithdrawViewTest(TestCase):
 
 class DenormalizerTest(TestCase):
 
-    fixtures = ['auth']
+    fixtures = ['auth','exchange']
 
     def setUp(self):
         self.collection = exchange.db[SOURCED_EVENTS]
@@ -110,3 +111,8 @@ class DenormalizerTest(TestCase):
 
     def test_ratio_normalization(self):
         exchange.update_exchange_ratio_on_event_stored(self)
+        self.assertEquals(3,models.ExchangeRatio.objects.count())
+        ratios = models.ExchangeRatio.objects.all()
+        for r in ratios:
+            self.assertTrue(r.ratio < Decimal(1.3))
+

@@ -1,0 +1,26 @@
+[
+{
+  "pk": 1,
+  "model": "exchange.currency",
+  "fields": {
+    "name": "EUR",
+    "base_value": "1"
+  }
+},
+{
+  "pk": 2,
+  "model": "exchange.currency",
+  "fields": {
+    "name": "USD",
+    "base_value": "0.75"
+  }
+},
+{
+  "pk": 3,
+  "model": "exchange.currency",
+  "fields": {
+    "name": "BTH",
+    "base_value": "0.44"
+  }
+}
+]

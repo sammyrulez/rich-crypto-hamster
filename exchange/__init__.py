@@ -1,3 +1,4 @@
+from decimal import Decimal
 from bson import Code
 from django.conf import settings
 from django.contrib.auth.models import User
@@ -86,8 +87,13 @@ def update_exchange_ratio_on_event_stored(sender, **kwargs):
     result = collection.map_reduce(exchange_ratio_mapper_code, exchange_reduce_code, "volume_results")
     total = collection.map_reduce(balance_exchange_mapper_code, balance_reduce_code, "total_results")
     t = total.find_one()['value']
-    print 'total ', t
     from exchange import models
     k = result.find_one()['value']
     ratio = (100 * k ** 1.19) / t
-    print 'update_exchange_ratio_on_event_stored ', ratio
+    #print 'update_exchange_ratio_on_event_stored ', ratio
+    currencies = models.Currency.objects.all()
+    for currency in currencies:
+        ex_ratio , created = models.ExchangeRatio.objects.get_or_create(currency = currency, defaults ={'ratio':0})
+        ex_ratio.ratio = currency.base_value * Decimal(ratio)
+        ex_ratio.save()
+
