@@ -1,10 +1,11 @@
+from django.contrib.auth.models import User
 from django.core.urlresolvers import reverse
 from django.test import TestCase, Client
-from pymongo import MongoClient
 from event_sourcing.mongodb_event_storage import SOURCED_EVENTS
 from exchange.forms import OperationForm
 import exchange
-from django.conf import settings
+from exchange import models
+from datetime import datetime
 
 PASSWORD = 'kabala'
 
@@ -91,7 +92,21 @@ class DenormalizerTest(TestCase):
 
     def setUp(self):
         self.collection = exchange.db[SOURCED_EVENTS]
-        self.collection.insert({'event': "deposit", 'payload':  {'user': TESTDUMMYUSER, 'amount': 20}})
+        self.deposit_amount = 50
+        self.collection.insert({'event': "deposit", 'payload':  {'user': TESTDUMMYUSER, 'amount': self.deposit_amount, 'timestamp' : datetime.now() }})
+        for k in range(0, 1000):
+            self.collection.insert({'event': "deposit", 'payload':  {'user': 'admin', 'amount': 20, 'timestamp' : datetime.now() }})
+
+    def tearDown(self):
+        self.collection.remove()
+
 
     def test_balance_normalization(self):
         exchange.update_balance_on_event_stored(self)
+        user_data = User.objects.get(username = TESTDUMMYUSER)
+        balances = models.Balance.objects.filter(owner= user_data).all()
+        for balance in balances:
+            self.assertEquals(self.deposit_amount,balance.current_value)
+
+    def test_ratio_normalization(self):
+        exchange.update_exchange_ratio_on_event_stored(self)
