@@ -1,3 +1,4 @@
+from datetime import datetime
 from celery import shared_task
 from django.conf import settings
 from event_sourcing import event_stored_fail, event_stored
@@ -23,6 +24,7 @@ instance = load_class(settings.EVENT_SOURCING_STORAGE)
 @shared_task
 def store_event(event_name, payload):
     print "Async: %s" % event_name
+    payload['timestamp'] =  datetime.now()
     try:
         instance.store_event({'event': event_name, 'payload': payload})
         event_stored.send("store_event", command=event_name, payload=payload)
